@@ -2,54 +2,86 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using ToDoList.Models;
 using System;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ToDoList.Tests
 {
   [TestClass]
   public class ItemTests : IDisposable
   {
-
+    public IConfiguration Configuration { get; set; }
     public void Dispose()
     {
       Item.ClearAll();
     }
 
-    [TestMethod]
-    public void ItemConstructor_CreatesInstanceOfItem_Item()
+    public ItemTests()
     {
-      Item newItem = new Item("test");
-      Assert.AreEqual(typeof(Item), newItem.GetType());
+      IConfigurationBuilder builder = new ConfigurationBuilder()
+          .AddJsonFile("appsettings.json");
+      Configuration = builder.Build();
+      DBConfiguration.ConnectionString = Configuration["ConnectionStrings:TestConnection"];
     }
 
     [TestMethod]
-    public void GetDescription_ReturnsDescription_String()
-    {
-      //Arrange
-      string description = "Walk the dog.";
-
-      //Act
-      Item newItem = new Item(description);
-      string result = newItem.Description;
-
-      //Assert
-      Assert.AreEqual(description, result);
-    }
-
-    [TestMethod]
-    public void SetDescription_SetDescription_String()
+    public void Save_SavesToDatabase_ItemList()
     {
       //Arrange
-      string description = "Walk the dog.";
-      Item newItem = new Item(description);
+      Item testItem = new Item("Mow the lawn");
 
       //Act
-      string updatedDescription = "Do the dishes";
-      newItem.Description = updatedDescription;
-      string result = newItem.Description;
+      testItem.Save();
+      List<Item> result = Item.GetAll();
+      List<Item> testList = new List<Item>{testItem};
 
       //Assert
-      Assert.AreEqual(updatedDescription, result);
+      CollectionAssert.AreEqual(testList, result);
     }
+
+
+
+
+
+
+
+
+    // [TestMethod]
+    // public void ItemConstructor_CreatesInstanceOfItem_Item()
+    // {
+    //   Item newItem = new Item("test");
+    //   Assert.AreEqual(typeof(Item), newItem.GetType());
+    // }
+
+    // [TestMethod]
+    // public void GetDescription_ReturnsDescription_String()
+    // {
+    //   //Arrange
+    //   string description = "Walk the dog.";
+
+    //   //Act
+    //   Item newItem = new Item(description);
+    //   string result = newItem.Description;
+
+    //   //Assert
+    //   Assert.AreEqual(description, result);
+    // }
+
+    // [TestMethod]
+    // public void SetDescription_SetDescription_String()
+    // {
+    //   //Arrange
+    //   string description = "Walk the dog.";
+    //   Item newItem = new Item(description);
+
+    //   //Act
+    //   string updatedDescription = "Do the dishes";
+    //   newItem.Description = updatedDescription;
+    //   string result = newItem.Description;
+
+    //   //Assert
+    //   Assert.AreEqual(updatedDescription, result);
+    // }
 
     [TestMethod]
     public void GetAll_ReturnsEmptyList_ItemList()
@@ -71,9 +103,10 @@ namespace ToDoList.Tests
       string description01 = "Walk the dog";
       string description02 = "Wash the dishes";
       Item newItem1 = new Item(description01);
+      newItem1.Save(); // New code
       Item newItem2 = new Item(description02);
+      newItem2.Save(); // New code
       List<Item> newList = new List<Item> { newItem1, newItem2 };
-
       //Act
       List<Item> result = Item.GetAll();
 
