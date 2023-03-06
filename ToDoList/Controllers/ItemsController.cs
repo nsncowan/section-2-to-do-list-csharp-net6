@@ -18,7 +18,9 @@ namespace ToDoList.Controllers
 
 public ActionResult Index()
 {
-    List<Item> model = _db.Items.Include(item => item.Category).ToList();
+    List<Item> model = _db.Items
+                            .Include(item => item.Category)
+                            .ToList();
     ViewBag.PageTitle = "View All Items";
     return View(model);
 }
@@ -32,6 +34,10 @@ public ActionResult Index()
     [HttpPost]
     public ActionResult Create(Item item)
     {
+      if (item.CategoryId == 0)
+      {
+        return RedirectToAction("Create");
+      }
       _db.Items.Add(item);
       _db.SaveChanges();
       return RedirectToAction("Index");
