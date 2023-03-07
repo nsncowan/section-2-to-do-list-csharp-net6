@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; // EF core is an object relational mapping (ORM) framework that allows us to work with databases like objects.
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace ToDoList.Controllers
 {
-  public class CategoriesController : Controller
+  public class CategoriesController : Controller // declares the class 'CategoriesController', which extends 'Controller'. (VERIFY)
   {
-    private readonly ToDoListContext _db;
+    private readonly ToDoListContext _db; 
 
     public CategoriesController(ToDoListContext db)
     {

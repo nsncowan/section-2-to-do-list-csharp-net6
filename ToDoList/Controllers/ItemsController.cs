@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq; // allows for some List functionality - like ToList()
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -9,9 +9,9 @@ namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
-    private readonly ToDoListContext _db; 
+    private readonly ToDoListContext _db; // declares a field of type 'ToDoListContext' called '_db'. This property will hold our database connection as a ToDoListContext type. The actual connection is set up in Program.cs
 
-    public ItemsController(ToDoListContext db)
+    public ItemsController(ToDoListContext db) // this is the ItemsController contructor. 
     {
       _db = db;
     }
