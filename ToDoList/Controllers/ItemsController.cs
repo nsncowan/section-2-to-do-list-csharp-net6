@@ -16,14 +16,22 @@ namespace ToDoList.Controllers
       _db = db;
     }
 
-public ActionResult Index()
-{
-    List<Item> model = _db.Items
-                            .Include(item => item.Category)
-                            .ToList();
-    ViewBag.PageTitle = "View All Items";
-    return View(model);
-}
+    public ActionResult Index()
+    {
+        List<Item> model = _db.Items
+                                .Include(item => item.Category)
+                                .ToList();
+        return View(model);
+    }
+
+    public ActionResult Favorites()
+    {
+        List<Item> favorites = _db.Items
+                                .Include(item => item.Favorite == true)
+                                .ToList();
+        ViewBag.PageTitle = "View Favorites";
+        return View(favorites);
+    }
 
     public ActionResult Create()
     {
@@ -51,9 +59,18 @@ public ActionResult Index()
       return View(thisItem);
     }
 
+    [HttpPost]
+    public ActionResult Details(Item item)
+    {
+      _db.Items.Update(item);
+      _db.SaveChanges();
+      return RedirectToAction("Details");
+    }
+
     public ActionResult Edit(int id)
     {
-      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      Item thisItem = _db.Items
+                          .FirstOrDefault(item => item.ItemId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisItem);
     }
