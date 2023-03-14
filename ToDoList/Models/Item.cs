@@ -16,4 +16,5 @@ namespace ToDoList.Models
 }
 
 
-/* With EF Core, we no longer need to write verbose custom methods to query a database, like Find() and Save(). Instead, we use simple built-in methods, which we'll call from the controller. */
+/* With EF Core, we no longer need to write verbose custom methods to query a database, like Find() and Save(). 
+Instead, we use simple built-in methods, which we'll call from the controller. */
