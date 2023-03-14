@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ToDoList.Models
 {
   public class Item
@@ -6,6 +8,7 @@ namespace ToDoList.Models
     public string Description { get; set; } // this field is set by the user in the UI
     public int CategoryId { get; set; } // Since each Item must belong to a category, it must hold an Id for the the category it belongs to.
     public Category Category { get; set; } // this is where the Category Object that the Item belongs to is held. It is set in the UI.
+    public List<ItemTag> JoinEntities { get;}
   }
 }
 
