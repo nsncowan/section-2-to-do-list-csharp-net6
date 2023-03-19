@@ -67,6 +67,7 @@ namespace ToDoList.Controllers
     [HttpPost]
     public ActionResult Edit(Item item)
     {
+      item.FormatDate();
       _db.Items.Update(item);
       _db.SaveChanges();
       return RedirectToAction("Index");

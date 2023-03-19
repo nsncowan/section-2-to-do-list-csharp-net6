@@ -18,6 +18,10 @@
   @Html.LabelFor(model => model.Category)
   @Html.DropDownList("CategoryId")
 
+  @Html.LabelFor(model => model.DueDate)
+  @Html.TextBoxFor(model => model.DueDate, new { type = "date"})
+
+
   <input type="submit" value="Save" />
 }
 
