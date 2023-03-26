@@ -31,6 +31,8 @@ else
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Item or Category", "Edit", new { id = Model.ItemId })</p>
+<p>@Html.ActionLink("Edit Item or Category", "Edit", new { id = Model.ItemId })</p> 
+@* "new {id = Model.ItemId}" creates an anonymous object to be passed to the route named in the link. 
+So, in the controller, when you see "int id" in the parameters for the "Edit" route, this is where it comes from. *@
 <p>@Html.ActionLink("Add a Tag", "AddTag", new { id = Model.ItemId })</p>
 <p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.ItemId })</p>
